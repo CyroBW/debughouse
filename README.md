@@ -6,7 +6,7 @@ VariantChess - a client for chess variants
 
 An in-depth paragraph about your project and overview of use.
 
-![alt text](https://github.com/CyroBW/variantchess/tree/main/screenshots/Screenshot from 2023-02-09 20-42-40.png)
+![alt text](https://user-images.githubusercontent.com/124148472/217779016-607d9469-bc14-40ff-88f4-3b11e67d16cd.png)
 
 ## Getting Started
 
