@@ -59,7 +59,6 @@ public class Board extends Application {
     public String fen = gameState.getFen();
     public boolean userBoard;
     private int toX, toY;
-    private Label ourUsernameLabel, theirUsernameLabel;
     public int getDropPieceSelected() {
         return dropPieceSelected;
     }
@@ -74,14 +73,6 @@ public class Board extends Application {
     public void render() {
         position.render();
         renderHands();
-    }
-
-    public void setTheirUser(String name) {
-        theirUsernameLabel.setText(name);
-    }
-
-    public void setOurUser(String name) {
-        ourUsernameLabel.setText(name);
     }
 
     public void setUserSide(Side side) {
@@ -149,25 +140,12 @@ public class Board extends Application {
         bottomClock = new Clock(this, 1800);
         topClock = new Clock(this, 1800);
 
-        theirUsernameLabel = new Label();
-        theirUsernameLabel.toBack();
-        theirUsernameLabel.setWrapText(true);
-        theirUsernameLabel.setPrefSize(squareSize * 1.5, squareSize * 4/5);
-        theirUsernameLabel.setStyle("-fx-alignment:top-left;-fx-background-color: white; -fx-border-color: black; -fx-border-width:" + 3 * scale + "px;" + "-fx-text-fill: BLACK;"
-                + "-fx-font-size: " + 12 * scale + "pt;");
-        ourUsernameLabel = new Label();
-        ourUsernameLabel.toBack();
-        ourUsernameLabel.setWrapText(true);
-        ourUsernameLabel.setPrefSize(squareSize * 1.5, squareSize * 4/5);
-        ourUsernameLabel.setStyle("-fx-alignment:top-left;-fx-background-color: white; -fx-border-color: black; -fx-border-width:" + 3 * scale + "px;" + "-fx-text-fill: BLACK;"
-                + "-fx-font-size: " + 12 * scale + "pt;");
-
         GridPane topControls = new GridPane();
-        topControls.addRow(0, topPocket, theirUsernameLabel, topClock);
+        topControls.addRow(0, topPocket, topClock);
         boardPane.setTop(topControls);
 
         GridPane bottomControls = new GridPane();
-        bottomControls.addRow(0, bottomPocket, ourUsernameLabel, bottomClock);
+        bottomControls.addRow(0, bottomPocket, bottomClock);
         boardPane.setBottom(bottomControls);
 
         leftPockets = new Pockets(this, userSide);
@@ -187,13 +165,11 @@ public class Board extends Application {
         boardPane.setCenter(center);
 
         BorderPane.setMargin(topControls, new Insets(squareSize * 7 / 30, 0, squareSize * 7 / 30, 20 * scale + squareSize * 4 / 5));
-        BorderPane.setMargin(bottomControls, new Insets(0, 0, squareSize * 1/2, 20 * scale + squareSize * 4 / 5));
+        BorderPane.setMargin(bottomControls, new Insets(0, 0, squareSize * 5/8, 20 * scale + squareSize * 4 / 5));
         BorderPane.setMargin(leftPockets, new Insets(0, 10 * scale, 0, 10 * scale));
         BorderPane.setMargin(rightPockets, new Insets(0, 10 * scale, 0, 10 * scale));
-        GridPane.setMargin(topPocket, new Insets(0, 13 * scale, 0, 0));
-        GridPane.setMargin(theirUsernameLabel,  new Insets(0, 13 * scale, 0, 0));
-        GridPane.setMargin(bottomPocket,  new Insets(0, 13 * scale, 0, 0));
-        GridPane.setMargin(ourUsernameLabel,  new Insets(0, 13  * scale, 0, 0));
+        GridPane.setMargin(topPocket, new Insets(0, squareSize * 7/4, 0, 0));
+        GridPane.setMargin(bottomPocket,  new Insets(0, squareSize * 7/4, 0, 0));
         boardPane.setStyle("-fx-background-color: #232323;");
 
         cursorImage.setFitWidth(squareSize * 4 / 5);

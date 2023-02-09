@@ -175,26 +175,6 @@ public class Client extends Application {
                 case "times2" -> Platform.runLater(() -> {
                     rightBoard.setTimes(args[1].split(","), !rightBoard.userSide.equals(Side.WHITE));
                 });
-                case "players1" -> Platform.runLater(() -> {
-                    String[] players = args[1].split(",");
-                    if (leftBoard.userSide.equals(Side.WHITE)) {
-                        leftBoard.setOurUser(players[0]);
-                        leftBoard.setTheirUser(players[1]);
-                    } else {
-                        leftBoard.setOurUser(players[1]);
-                        leftBoard.setTheirUser(players[0]);
-                    }
-                });
-                case "players2" -> Platform.runLater(() -> {
-                    String[] players = args[1].split(",");
-                    if (rightBoard.userSide.equals(Side.WHITE)) {
-                        rightBoard.setOurUser(players[0]);
-                        rightBoard.setTheirUser(players[1]);
-                    } else {
-                        rightBoard.setOurUser(players[1]);
-                        rightBoard.setTheirUser(players[0]);
-                    }
-                });
             }
         });
     }
