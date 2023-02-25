@@ -175,6 +175,48 @@ public class Client extends Application {
                 case "times2" -> Platform.runLater(() -> {
                     rightBoard.setTimes(args[1].split(","), !rightBoard.userSide.equals(Side.WHITE));
                 });
+                case "players1" -> Platform.runLater(() -> {
+                    String[] players = args[1].split(",");
+                    if (leftBoard.userSide.equals(Side.WHITE)) {
+                        leftBoard.username1 = players[1];
+                        leftBoard.username2 = players[0];
+                    } else {
+                        leftBoard.username1 = players[0];
+                        leftBoard.username2 = players[1];
+                    }
+                });
+                case "players2" -> Platform.runLater(() -> {
+                    String[] players = args[1].split(",");
+                    if (rightBoard.userSide.equals(Side.WHITE)) {
+                        rightBoard.username1 = players[1];
+                        rightBoard.username2 = players[0];
+                    } else {
+                        rightBoard.username1 = players[0];
+                        rightBoard.username2 = players[1];
+                    }
+                });
+                case "ratings1" -> Platform.runLater(() -> {
+                    String[] ratings = args[1].split(",");
+                    if (leftBoard.userSide.equals(Side.WHITE)) {
+                        leftBoard.rating1 = ratings[1];
+                        leftBoard.rating2 = ratings[0];
+                    } else {
+                        leftBoard.rating1 = ratings[0];
+                        leftBoard.rating2 = ratings[1];
+                    }
+                    leftBoard.createComponents();
+                });
+                case "ratings2" -> Platform.runLater(() -> {
+                    String[] ratings = args[1].split(",");
+                    if (rightBoard.userSide.equals(Side.WHITE)) {
+                        rightBoard.rating1 = ratings[1];
+                        rightBoard.rating2 = ratings[0];
+                    } else {
+                        rightBoard.rating1 = ratings[0];
+                        rightBoard.rating2 = ratings[1];
+                    }
+                    rightBoard.createComponents();
+                });
             }
         });
     }

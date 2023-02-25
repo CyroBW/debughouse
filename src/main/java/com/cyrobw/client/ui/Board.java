@@ -44,7 +44,6 @@ public class Board extends Application {
 
     public Position position;
     public Side userSide = Side.WHITE;
-
     private double decorationWidth;
     private double decorationHeight;
     private final List<String> moveHistory = new ArrayList<>();
@@ -59,6 +58,8 @@ public class Board extends Application {
     public String fen = gameState.getFen();
     public boolean userBoard;
     private int toX, toY;
+    public String username1 = "username", username2 = "username";
+    public String rating1 = "(1600)", rating2 = "(1600)";
     public int getDropPieceSelected() {
         return dropPieceSelected;
     }
@@ -134,11 +135,33 @@ public class Board extends Application {
 
     public void createComponents() {
         boardPane.getChildren().clear();
+
+        // Pockets
         bottomPocket = new Pocket(this, userSide);
         topPocket = new Pocket(this, userSide.flip());
 
+        // Clocks
         bottomClock = new Clock(this, 1800);
         topClock = new Clock(this, 1800);
+
+        // Player info
+        Text username = new Text(squareSize * 1.2, squareSize * 0.6, username1);
+        username.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        username.setFill(Color.WHITE);
+
+        Text rating = new Text(squareSize * 1.3 + username.prefWidth(-1), squareSize * 0.6, rating1);
+        rating.setFont(Font.font("Arial", 20));
+        rating.setFill(Color.LIGHTGREY);
+        boardPane.getChildren().addAll(username, rating);
+
+        Text username2label = new Text(squareSize * 1.2, squareSize * 10.1, username2);
+        username2label.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        username2label.setFill(Color.WHITE);
+
+        Text rating2label = new Text(squareSize * 1.3 + username2label.prefWidth(-1), squareSize * 10.1, rating2);
+        rating2label.setFont(Font.font("Arial", 20));
+        rating2label.setFill(Color.LIGHTGREY);
+        boardPane.getChildren().addAll(username2label, rating2label);
 
         GridPane topControls = new GridPane();
         topControls.addRow(0, topPocket, topClock);
@@ -154,6 +177,7 @@ public class Board extends Application {
         rightPockets = new Pockets(this, userSide);
         boardPane.setRight(rightPockets);
 
+        // Board
         BorderPane center = new BorderPane();
         drawBoard(center);
         drawCoordinates(center);
@@ -164,6 +188,7 @@ public class Board extends Application {
 
         boardPane.setCenter(center);
 
+        // Set margins
         BorderPane.setMargin(topControls, new Insets(squareSize * 7 / 30, 0, squareSize * 7 / 30, 20 * scale + squareSize * 4 / 5));
         BorderPane.setMargin(bottomControls, new Insets(0, 0, squareSize * 5/8, 20 * scale + squareSize * 4 / 5));
         BorderPane.setMargin(leftPockets, new Insets(0, 10 * scale, 0, 10 * scale));
