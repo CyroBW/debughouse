@@ -5,6 +5,8 @@ import com.github.bhlangonijr.chesslib.Piece;
 import com.github.bhlangonijr.chesslib.Side;
 import com.github.bhlangonijr.chesslib.Square;
 import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -56,6 +58,7 @@ public class Board extends Application {
     public int[] times = new int[2];
 
     public String fen = gameState.getFen();
+    public String fenWithHand;
     public boolean userBoard;
     private int toX, toY;
     public String username1 = "username", username2 = "username";
@@ -461,6 +464,7 @@ public class Board extends Application {
         unhighlightAll();
         gameState.loadFromFen(fen);
         this.fen = fen;
+        this.fenWithHand = this.gameState.getFenWithHand(fen);
         position.executePremoves();
         if (playing) {
             updateClockTurns();
@@ -539,6 +543,7 @@ public class Board extends Application {
         stage.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 setCursorImage(null);
+                underPromote = false;
             }
         });
 
