@@ -572,12 +572,12 @@ public class Board extends Application {
             if (key.getCode() == KeyCode.EQUALS) {
                 setSquareSize(squareSize+1);
                 createComponents();
-                resizeScene(stage, squareSize * 10, squareSize * 11);
+                resizeScene(stage, squareSize * 10, squareSize * 12);
             }
             if (key.getCode() == KeyCode.MINUS) {
                 setSquareSize(squareSize-1);
                 createComponents();
-                resizeScene(stage, squareSize * 10, squareSize * 11);
+                resizeScene(stage, squareSize * 10, squareSize * 12);
             }
             if (key.getCode() == KeyCode.H) {
                 togglePocketLocation();
