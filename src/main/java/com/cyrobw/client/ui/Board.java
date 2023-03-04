@@ -9,7 +9,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -26,6 +25,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.prefs.Preferences;
 
 public class Board extends Application {
@@ -56,6 +56,7 @@ public class Board extends Application {
     public int[] times = new int[2];
 
     public String fen = gameState.getFen();
+    public String fenWithHand;
     public boolean userBoard;
     private int toX, toY;
     public String username1 = "username", username2 = "username";
@@ -461,6 +462,7 @@ public class Board extends Application {
         unhighlightAll();
         gameState.loadFromFen(fen);
         this.fen = fen;
+        this.fenWithHand = this.gameState.getFenWithHand(fen);
         position.executePremoves();
         if (playing) {
             updateClockTurns();
@@ -496,8 +498,8 @@ public class Board extends Application {
         }
     }
     private void resizeScene(Stage stage, double newWidth, double newHeight) {
-        stage.setWidth(newWidth + this.decorationWidth);
-        stage.setHeight(newHeight + this.decorationHeight);
+        stage.setWidth(newWidth);
+        stage.setHeight(newHeight);
     }
 
     /**
@@ -539,43 +541,43 @@ public class Board extends Application {
         stage.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 setCursorImage(null);
+                underPromote = false;
             }
         });
 
         Preferences prefs = Preferences.userRoot().node("preferences");
         if (userBoard) {
             pocketLayoutSetting = prefs.getInt("left_board_pocket_location", 0);
-        } else {
-            pocketLayoutSetting = prefs.getInt("right_board_pocket_location",0);
-        }
-        if (userBoard) {
             squareSize = prefs.getDouble("left_board_square_size", MAX_SQUARE_SIZE);
         } else {
+            pocketLayoutSetting = prefs.getInt("right_board_pocket_location",0);
             squareSize = prefs.getDouble("right_board_square_size", MAX_SQUARE_SIZE);
         }
+
         setSquareSize(squareSize);
-        double initialSceneWidth = squareSize * 10;
-        double initialSceneHeight = squareSize * 11;
-        Scene scene = new Scene(boardPane, initialSceneWidth, initialSceneHeight);
+        createComponents();
+        Scene scene = new Scene(boardPane);
         stage.setScene(scene);
-        stage.setResizable(false);
         stage.show();
 
-        this.decorationWidth = stage.getWidth() - initialSceneWidth;
-        this.decorationHeight = stage.getHeight() - initialSceneHeight;
-
-        createComponents();
+        if (userBoard) {
+            stage.setWidth(prefs.getDouble("left_board_width", squareSize * 10));
+            stage.setHeight(prefs.getDouble("left_board_height", squareSize * 11));
+        } else {
+            stage.setWidth(prefs.getDouble("right_board_width", squareSize * 10));
+            stage.setHeight(prefs.getDouble("right_board_height", squareSize * 11));
+        }
 
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.EQUALS) {
                 setSquareSize(squareSize+1);
-                resizeScene(stage, squareSize * 10, squareSize * 11);
                 createComponents();
+                resizeScene(stage, squareSize * 10, squareSize * 12);
             }
             if (key.getCode() == KeyCode.MINUS) {
                 setSquareSize(squareSize-1);
-                resizeScene(stage, squareSize * 10, squareSize * 11);
                 createComponents();
+                resizeScene(stage, squareSize * 10, squareSize * 12);
             }
             if (key.getCode() == KeyCode.H) {
                 togglePocketLocation();

@@ -468,4 +468,22 @@ public class BughouseBoard {
         }
         board.setPiece(piece, sq);
     }
+
+    public String getFenWithHand(String fen) {
+        String[] args = fen.split(" ", 2);
+        StringBuilder hand = new StringBuilder();
+        for (String p : new String[]{"P", "N", "B", "R", "Q"}) {
+            int count = whiteHand.get(Piece.fromFenSymbol(p));
+            if (count > 0) {
+                hand.append(p.repeat(count));
+            }
+        }
+        for (String p : new String[]{"p", "n", "b", "r", "q"}) {
+            int count = blackHand.get(Piece.fromFenSymbol(p));
+            if (count > 0) {
+                hand.append(p.repeat(count));
+            }
+        }
+        return args[0] + "[" + hand + "] " + args[1];
+    }
 }

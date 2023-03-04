@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.prefs.Preferences;
@@ -46,12 +47,16 @@ public class Client extends Application {
                 event -> {
                     prefs.putDouble("stage1_x", stage1.getX());
                     prefs.putDouble("stage1_y", stage1.getY());
+                    prefs.putDouble("left_board_width", stage1.getWidth());
+                    prefs.putDouble("left_board_height", stage1.getHeight());
                 });
 
         stage2.setOnCloseRequest(
                 event -> {
                     prefs.putDouble("stage2_x", stage2.getX());
                     prefs.putDouble("stage2_y", stage2.getY());
+                    prefs.putDouble("right_board_width", stage2.getWidth());
+                    prefs.putDouble("right_board_height", stage2.getHeight());
                 });
 
         stage3.setOnCloseRequest(
