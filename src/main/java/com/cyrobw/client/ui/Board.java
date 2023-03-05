@@ -56,7 +56,6 @@ public class Board extends Application {
     public int[] times = new int[2];
 
     public String fen = gameState.getFen();
-    public String fenWithHand;
     public boolean userBoard;
     private int toX, toY;
     public String username1 = "username", username2 = "username";
@@ -462,8 +461,12 @@ public class Board extends Application {
         unhighlightAll();
         gameState.loadFromFen(fen);
         this.fen = fen;
-        this.fenWithHand = this.gameState.getFenWithHand(fen);
-        position.executePremoves();
+        try {
+            position.executePremoves();
+        }
+        catch (Exception e) {
+            position.cancelPremoves();
+        }
         if (playing) {
             updateClockTurns();
         }
@@ -571,7 +574,7 @@ public class Board extends Application {
         BooleanProperty useBook = new SimpleBooleanProperty(false);
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.SPACE) {
-                if (useBook.equals(false)) {
+                if (useBook.get() == false) {
                     Client.sendToServer("book on");
                     useBook.set(true);
                 }
@@ -691,7 +694,7 @@ public class Board extends Application {
         });
         scene.addEventHandler(KeyEvent.KEY_RELEASED, (key) -> {
             if (key.getCode() == KeyCode.SPACE) {
-                if (useBook.equals(true)) {
+                if (useBook.get() == true) {
                     Client.sendToServer("book off");
                     useBook.set(false);
                 }
