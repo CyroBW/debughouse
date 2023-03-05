@@ -5,6 +5,8 @@ import com.github.bhlangonijr.chesslib.Piece;
 import com.github.bhlangonijr.chesslib.Side;
 import com.github.bhlangonijr.chesslib.Square;
 import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -44,8 +46,6 @@ public class Board extends Application {
 
     public Position position;
     public Side userSide = Side.WHITE;
-    private double decorationWidth;
-    private double decorationHeight;
     private final List<String> moveHistory = new ArrayList<>();
 
     public Rectangle[] squares = new Rectangle[64];
@@ -568,7 +568,14 @@ public class Board extends Application {
             stage.setHeight(prefs.getDouble("right_board_height", squareSize * 11));
         }
 
+        BooleanProperty useBook = new SimpleBooleanProperty(false);
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if (key.getCode() == KeyCode.SPACE) {
+                if (useBook.equals(false)) {
+                    Client.sendToServer("book on");
+                    useBook.set(true);
+                }
+            }
             if (key.getCode() == KeyCode.EQUALS) {
                 setSquareSize(squareSize+1);
                 createComponents();
@@ -683,8 +690,11 @@ public class Board extends Application {
             }
         });
         scene.addEventHandler(KeyEvent.KEY_RELEASED, (key) -> {
-            if (key.getCode() == KeyCode.F5) {
-                createComponents();
+            if (key.getCode() == KeyCode.SPACE) {
+                if (useBook.equals(true)) {
+                    Client.sendToServer("book off");
+                    useBook.set(false);
+                }
             }
             if (key.getCode() == KeyCode.DIGIT1) {
                 if (dropPieceSelected == 1) {
