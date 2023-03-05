@@ -76,6 +76,7 @@ public class Position extends GridPane {
      */
     public void cancelPremoves() {
         Client.sendToServer("cancel");
+        board.setSelectedDrop(null);
         board.gameState.resetHandOffsets();
         board.gameState.loadFromFen(board.fen);
         premoves.clear();

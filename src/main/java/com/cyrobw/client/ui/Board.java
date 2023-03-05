@@ -27,7 +27,6 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.prefs.Preferences;
 
 public class Board extends Application {
@@ -251,7 +250,7 @@ public class Board extends Application {
                 outlineSquares[Square.fromValue(Character.toString('A' + toX) + (1 + toY)).ordinal()].setVisible(false);
             }
             int pieceIndex = dropPieceSelected - 1;
-            setCursorImage(null);
+            setSelectedDrop(null);
             if (pieceIndex == -1) {
                 return;
             }
@@ -471,7 +470,7 @@ public class Board extends Application {
             updateClockTurns();
         }
     }
-    public void setCursorImage(Piece piece) {
+    public void setSelectedDrop(Piece piece) {
         Image image = BoardField.pieceToImage.get(piece);
         cursorImage.setImage(image);
         if (image == null) {
@@ -543,7 +542,7 @@ public class Board extends Application {
         stage.setTitle("Debughouse Client");
         stage.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
-                setCursorImage(null);
+                setSelectedDrop(null);
                 underPromote = false;
             }
         });
@@ -595,45 +594,45 @@ public class Board extends Application {
             if (key.getCode() == KeyCode.DIGIT1) {
                 if (dropPieceSelected != 1) {
                     if (userSide.equals(Side.WHITE)) {
-                        setCursorImage(Piece.WHITE_PAWN);
+                        setSelectedDrop(Piece.WHITE_PAWN);
                     } else {
-                        setCursorImage(Piece.BLACK_PAWN);
+                        setSelectedDrop(Piece.BLACK_PAWN);
                     }
                 }
             }
             if (key.getCode() == KeyCode.DIGIT2) {
                 if (dropPieceSelected != 2) {
                     if (userSide.equals(Side.WHITE)) {
-                        setCursorImage(Piece.WHITE_KNIGHT);
+                        setSelectedDrop(Piece.WHITE_KNIGHT);
                     } else {
-                        setCursorImage(Piece.BLACK_KNIGHT);
+                        setSelectedDrop(Piece.BLACK_KNIGHT);
                     }
                 }
             }
             if (key.getCode() == KeyCode.DIGIT3) {
                 if (dropPieceSelected != 3) {
                     if (userSide.equals(Side.WHITE)) {
-                        setCursorImage(Piece.WHITE_BISHOP);
+                        setSelectedDrop(Piece.WHITE_BISHOP);
                     } else {
-                        setCursorImage(Piece.BLACK_BISHOP);
+                        setSelectedDrop(Piece.BLACK_BISHOP);
                     }
                 }
             }
             if (key.getCode() == KeyCode.DIGIT4) {
                 if (dropPieceSelected != 4) {
                     if (userSide.equals(Side.WHITE)) {
-                        setCursorImage(Piece.WHITE_ROOK);
+                        setSelectedDrop(Piece.WHITE_ROOK);
                     } else {
-                        setCursorImage(Piece.BLACK_ROOK);
+                        setSelectedDrop(Piece.BLACK_ROOK);
                     }
                 }
             }
             if (key.getCode() == KeyCode.DIGIT5) {
                 if (dropPieceSelected != 5) {
                     if (userSide.equals(Side.WHITE)) {
-                        setCursorImage(Piece.WHITE_QUEEN);
+                        setSelectedDrop(Piece.WHITE_QUEEN);
                     } else {
-                        setCursorImage(Piece.BLACK_QUEEN);
+                        setSelectedDrop(Piece.BLACK_QUEEN);
                     }
                 }
             }
@@ -701,27 +700,27 @@ public class Board extends Application {
             }
             if (key.getCode() == KeyCode.DIGIT1) {
                 if (dropPieceSelected == 1) {
-                    setCursorImage(null);
+                    setSelectedDrop(null);
                 }
             }
             if (key.getCode() == KeyCode.DIGIT2) {
                 if (dropPieceSelected == 2) {
-                    setCursorImage(null);
+                    setSelectedDrop(null);
                 }
             }
             if (key.getCode() == KeyCode.DIGIT3) {
                 if (dropPieceSelected == 3) {
-                    setCursorImage(null);
+                    setSelectedDrop(null);
                 }
             }
             if (key.getCode() == KeyCode.DIGIT4) {
                 if (dropPieceSelected == 4) {
-                    setCursorImage(null);
+                    setSelectedDrop(null);
                 }
             }
             if (key.getCode() == KeyCode.DIGIT5) {
                 if (dropPieceSelected == 5) {
-                    setCursorImage(null);
+                    setSelectedDrop(null);
                 }
             }
             if (key.getCode() == KeyCode.ALT) {

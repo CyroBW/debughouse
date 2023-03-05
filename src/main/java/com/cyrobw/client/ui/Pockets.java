@@ -14,7 +14,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class Pockets extends GridPane {
     private final Board board;
@@ -76,7 +75,7 @@ public class Pockets extends GridPane {
                 pane.getChildren().addAll(view, square, text, selectBoundary);
                 if (i > 4) {
                     selectBoundary.setOnMousePressed((MouseEvent event) -> {
-                        board.setCursorImage(drop);
+                        board.setSelectedDrop(drop);
                         event.consume();
                     });
                 }
