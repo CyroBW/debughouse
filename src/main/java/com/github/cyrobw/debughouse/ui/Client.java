@@ -21,7 +21,7 @@ public class Client extends Application {
     public static String password;
     public static String ip;
     public static String host = "8080";
-
+    public Side userSide = Side.WHITE;
     @Override
     public void start(Stage stage) throws Exception {
         leftBoard = new Board(true);
@@ -119,35 +119,33 @@ public class Client extends Application {
                 case "message" -> Platform.runLater(() -> {
                     chat.receivedMessaged(args[1]);
                 });
+                case "started" -> Platform.runLater(() -> {
+                    leftBoard.setPlaying(true);
+                    rightBoard.setPlaying(true);
+                });
                 case "finished" -> Platform.runLater(() -> {
                     leftBoard.setPlaying(false);
+                    rightBoard.setPlaying(false);
                     leftBoard.position.cancelPremoves();
                     leftBoard.position.render();
-                    leftBoard.renderHands();
                     leftBoard.reset();
                     leftBoard.stopClocks();
-                    rightBoard.setPlaying(false);
                     rightBoard.reset();
                     rightBoard.stopClocks();
                     SoundPlayer.playSound("Checkmate.wav");
                 });
-                case "userside" -> {
+                case "userside" -> Platform.runLater(() -> {
                     Side userSide = Side.fromValue(args[1].toUpperCase());
-                    Platform.runLater(() -> {
-                        leftBoard.setPlaying(true);
-                        leftBoard.setUserSide(userSide);
-                        rightBoard.setPlaying(true);
-                        rightBoard.setUserSide(userSide.flip());
-                        leftBoard.createComponents();
-                        rightBoard.createComponents();
-                        SoundPlayer.playSound("Gamestart.wav");
-                    });
-                }
+                    leftBoard.setUserSide(userSide);
+                    rightBoard.setUserSide(userSide.flip());
+                });
                 case "fen1" -> Platform.runLater(() -> {
+                    leftBoard.setPlaying(true);
                     leftBoard.setFen(args[1]);
                     leftBoard.render();
                 });
                 case "fen2" -> Platform.runLater(() -> {
+                    rightBoard.setPlaying(true);
                     rightBoard.setFen(args[1]);
                     rightBoard.render();
                 });

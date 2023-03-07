@@ -80,7 +80,10 @@ public class Board extends Application {
     }
 
     public void setUserSide(Side side) {
-        this.userSide = side;
+        if (!this.userSide.equals(side)) {
+            this.userSide = side;
+            createComponents();
+        }
     }
 
     public void setHand(String hand, Side side) {
