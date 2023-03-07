@@ -1,4 +1,4 @@
-package com.cyrobw.client;
+package com.github.cyrobw.debughouse;
 
 import com.github.bhlangonijr.chesslib.*;
 import com.github.bhlangonijr.chesslib.move.Move;
@@ -35,7 +35,6 @@ public class BughouseBoard {
 
     /**
      * Reset board state
-     *
      */
     public void reset() {
         board = new Board();
@@ -55,8 +54,7 @@ public class BughouseBoard {
             for (Piece piece : Piece.allPieces) {
                 whiteHandOffset.put(piece, 0);
             }
-        }
-        else {
+        } else {
             for (Piece piece : Piece.allPieces) {
                 blackHandOffset.put(piece, 0);
             }
@@ -65,7 +63,6 @@ public class BughouseBoard {
 
     /**
      * Resets offsets, usually called when premoves are cancelled
-     *
      */
     public void resetHandOffsets() {
         resetHandOffset(Side.WHITE);
@@ -82,8 +79,7 @@ public class BughouseBoard {
             for (Piece piece : Piece.allPieces) {
                 whiteHand.put(piece, 0);
             }
-        }
-        else {
+        } else {
             for (Piece piece : Piece.allPieces) {
                 blackHand.put(piece, 0);
             }
@@ -101,8 +97,7 @@ public class BughouseBoard {
             for (Piece piece : Piece.allPieces) {
                 hand.put(piece, whiteHand.get(piece) + whiteHandOffset.get(piece));
             }
-        }
-        else {
+        } else {
             for (Piece piece : Piece.allPieces) {
                 hand.put(piece, blackHand.get(piece) + blackHandOffset.get(piece));
             }
@@ -123,8 +118,7 @@ public class BughouseBoard {
             Piece piece = Piece.fromFenSymbol(p + "");
             if (side.equals(Side.WHITE)) {
                 whiteHand.put(piece, whiteHand.get(piece) + 1);
-            }
-            else {
+            } else {
                 blackHand.put(piece, blackHand.get(piece) + 1);
             }
         }
@@ -161,7 +155,6 @@ public class BughouseBoard {
     }
 
     /**
-     *
      * @param piece
      * @param side
      */
@@ -174,7 +167,6 @@ public class BughouseBoard {
     }
 
     /**
-     *
      * @return
      */
     public Side sideToMove() {
@@ -182,7 +174,6 @@ public class BughouseBoard {
     }
 
     /**
-     *
      * @param fen
      */
     public void loadFromFen(String fen) {
@@ -190,7 +181,6 @@ public class BughouseBoard {
     }
 
     /**
-     *
      * @return
      */
     public String getFen() {
@@ -198,7 +188,6 @@ public class BughouseBoard {
     }
 
     /**
-     *
      * @param sq
      * @return
      */
@@ -207,8 +196,6 @@ public class BughouseBoard {
     }
 
     /**
-     *
-     *
      * @param file
      * @param rank
      * @return piece on square
@@ -257,8 +244,7 @@ public class BughouseBoard {
                 return false;
             }
             return true;
-        }
-        else {
+        } else {
             var moves = board.pseudoLegalMoves();
             move = move.toLowerCase();
             for (Move m : moves) {
@@ -283,8 +269,7 @@ public class BughouseBoard {
             Piece drop;
             if (side.equals(Side.WHITE)) {
                 drop = Piece.fromFenSymbol(Character.toLowerCase(move.charAt(0)) + "");
-            }
-            else {
+            } else {
                 drop = Piece.fromFenSymbol(Character.toUpperCase(move.charAt(0)) + "");
             }
             // Can't drop on first or last rank
@@ -349,8 +334,7 @@ public class BughouseBoard {
                         (castleRight.equals(CastleRight.QUEEN_SIDE) || castleRight.equals(CastleRight.KING_AND_QUEEN_SIDE))) {
                     return true;
                 }
-            }
-            else {
+            } else {
                 CastleRight castleRight = board.getCastleRight(Side.WHITE);
                 if (from.equals(Square.E1) && to.equals(Square.G1) &&
                         (castleRight.equals(CastleRight.KING_SIDE) || castleRight.equals(CastleRight.KING_AND_QUEEN_SIDE))) {
@@ -383,8 +367,7 @@ public class BughouseBoard {
             if (whiteHand.get(drop) > 0) { // Can't have the piece yet
                 return false;
             }
-        }
-        else {
+        } else {
             drop = Piece.fromFenSymbol(Character.toLowerCase(move.charAt(0)) + "");
             if (blackHand.get(drop) > 0) { // Can't have the piece yet
                 return false;
@@ -409,11 +392,9 @@ public class BughouseBoard {
                 drop = Piece.fromFenSymbol(Character.toUpperCase(move.charAt(0)) + "");
                 if (type.equals(MoveType.NORMAL)) {
                     subtractFromHand(drop, Side.WHITE);
-                }
-                else if (type.equals(MoveType.PREMOVE)) {
+                } else if (type.equals(MoveType.PREMOVE)) {
                     subtractFromHandOffset(drop, Side.WHITE);
-                }
-                else if (type.equals(MoveType.EXECUTED_PREMOVE)) {
+                } else if (type.equals(MoveType.EXECUTED_PREMOVE)) {
                     subtractFromHand(drop, Side.WHITE);
                     addToHandOffset(drop, Side.WHITE);
                 }
@@ -421,18 +402,15 @@ public class BughouseBoard {
                 drop = Piece.fromFenSymbol(Character.toLowerCase(move.charAt(0)) + "");
                 if (type.equals(MoveType.NORMAL)) {
                     subtractFromHand(drop, Side.BLACK);
-                }
-                else if (type.equals(MoveType.PREMOVE)) {
+                } else if (type.equals(MoveType.PREMOVE)) {
                     subtractFromHandOffset(drop, Side.BLACK);
-                }
-                else if (type.equals(MoveType.EXECUTED_PREMOVE)) {
+                } else if (type.equals(MoveType.EXECUTED_PREMOVE)) {
                     subtractFromHand(drop, Side.BLACK);
                     addToHandOffset(drop, Side.BLACK);
                 }
             }
             putPiece(drop, to);
-        }
-        else {
+        } else {
             Square from = Square.fromValue(move.substring(0, 2).toUpperCase());
             if (move.length() == 5) {
                 Piece promotionPiece;
@@ -442,15 +420,13 @@ public class BughouseBoard {
                     promotionPiece = Piece.fromFenSymbol(Character.toLowerCase(move.charAt(4)) + "");
                 }
                 board.doMove(new Move(from, to, promotionPiece));
-            }
-            else {
+            } else {
                 board.doMove(new Move(from, to));
             }
         }
         if (type.equals(MoveType.NORMAL) || type.equals(MoveType.EXECUTED_PREMOVE)) {
             board.setSideToMove(side.flip());
-        }
-        else if (type.equals(MoveType.PREMOVE) || type.equals(MoveType.REPLAYED_PREMOVE)) {
+        } else if (type.equals(MoveType.PREMOVE) || type.equals(MoveType.REPLAYED_PREMOVE)) {
             board.setSideToMove(side);
         }
     }
@@ -467,23 +443,5 @@ public class BughouseBoard {
             board.unsetPiece(occupied, sq);
         }
         board.setPiece(piece, sq);
-    }
-
-    public String getFenWithHand(String fen) {
-        String[] args = fen.split(" ", 2);
-        StringBuilder hand = new StringBuilder();
-        for (String p : new String[]{"P", "N", "B", "R", "Q"}) {
-            int count = whiteHand.get(Piece.fromFenSymbol(p));
-            if (count > 0) {
-                hand.append(p.repeat(count));
-            }
-        }
-        for (String p : new String[]{"p", "n", "b", "r", "q"}) {
-            int count = blackHand.get(Piece.fromFenSymbol(p));
-            if (count > 0) {
-                hand.append(p.repeat(count));
-            }
-        }
-        return args[0] + "[" + hand + "] " + args[1];
     }
 }

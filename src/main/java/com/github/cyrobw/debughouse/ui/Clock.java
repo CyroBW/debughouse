@@ -1,4 +1,4 @@
-package com.cyrobw.client.ui;
+package com.github.cyrobw.debughouse.ui;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -27,7 +27,7 @@ public class Clock extends Pane {
         this.deciseconds = deciseconds;
         this.running = false;
 
-        HEIGHT = board.squareSize * 4/5;
+        HEIGHT = board.squareSize * 4 / 5;
         WIDTH = board.squareSize * 2;
 
         background = new Rectangle();
@@ -45,7 +45,6 @@ public class Clock extends Pane {
 
     /**
      * Returns the formatted time from the deciseconds.
-     *
      */
     public String getFormattedTime() {
         int seconds = deciseconds / 10;
@@ -65,13 +64,11 @@ public class Clock extends Pane {
 
     /**
      * Start clock animation
-     *
      */
     public void start() {
         if (deciseconds < 100) {
             background.setFill(Color.web("#7b2c2b"));
-        }
-        else {
+        } else {
             background.setFill(Color.web("#39561FFF"));
         }
         running = true;
@@ -100,7 +97,6 @@ public class Clock extends Pane {
 
     /**
      * Stop clock
-     *
      */
     public void stop() {
         if (deciseconds < lowWarningThreshold) {
@@ -114,7 +110,6 @@ public class Clock extends Pane {
 
     /**
      * Render clock component.
-     *
      */
     public void render() {
         this.getChildren().remove(clockText);

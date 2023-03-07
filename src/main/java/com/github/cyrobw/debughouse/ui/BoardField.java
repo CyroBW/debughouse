@@ -1,4 +1,4 @@
-package com.cyrobw.client.ui;
+package com.github.cyrobw.debughouse.ui;
 
 import com.github.bhlangonijr.chesslib.Piece;
 import com.github.bhlangonijr.chesslib.Side;
@@ -54,7 +54,6 @@ public class BoardField extends Label {
 
     /**
      * Callback when mouse is pressed on field
-     *
      */
     private void onMousePressed(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
@@ -91,7 +90,6 @@ public class BoardField extends Label {
 
     /**
      * Callback when mouse is dragged on field
-     *
      */
     private void onMouseDragged(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
@@ -105,8 +103,7 @@ public class BoardField extends Label {
             if (board.userSide.equals(Side.BLACK)) {
                 toX = 7 - (int) Math.floor((e.getSceneX() - boundsInScene.getMinX()) / board.squareSize);
                 toY = (int) Math.floor((e.getSceneY() - boundsInScene.getMinY()) / board.squareSize);
-            }
-            else {
+            } else {
                 toX = (int) Math.floor((e.getSceneX() - boundsInScene.getMinX()) / board.squareSize);
                 toY = 7 - (int) Math.floor((e.getSceneY() - boundsInScene.getMinY()) / board.squareSize);
             }
@@ -118,7 +115,6 @@ public class BoardField extends Label {
 
     /**
      * Callback when mouse is released on field.
-     *
      */
     private void onMouseReleased(MouseEvent e) {
         this.setTranslateX(0);
@@ -154,8 +150,7 @@ public class BoardField extends Label {
                 }
                 to = Character.toString('A' + toX) + (1 + toY);
                 move = new char[]{'P', 'N', 'B', 'R', 'Q'}[board.getDropPieceSelected() - 1] + "@" + to;
-            }
-            else {
+            } else {
                 toX = x + offsetX;
                 toY = y + offsetY;
                 if (toX < 0 || toX > 7 || toY < 0 || toY > 7) {
