@@ -553,6 +553,9 @@ public class Board extends Application {
             }
         });
 
+        stage.maxWidthProperty().bind(stage.widthProperty());
+        stage.minWidthProperty().bind(stage.widthProperty());
+
         Preferences prefs = Preferences.userRoot().node("preferences");
         if (userBoard) {
             pocketLayoutSetting = prefs.getInt("left_board_pocket_location", 0);
