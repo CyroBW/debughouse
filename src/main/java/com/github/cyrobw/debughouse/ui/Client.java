@@ -122,6 +122,7 @@ public class Client extends Application {
                 case "started" -> Platform.runLater(() -> {
                     leftBoard.setPlaying(true);
                     rightBoard.setPlaying(true);
+                    SoundPlayer.playSound("Gamestart.wav");
                 });
                 case "finished" -> Platform.runLater(() -> {
                     leftBoard.setPlaying(false);
