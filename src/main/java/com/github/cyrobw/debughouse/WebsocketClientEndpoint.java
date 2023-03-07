@@ -1,7 +1,8 @@
-package com.cyrobw.client;
+package com.github.cyrobw.debughouse;
 
 import javax.websocket.*;
 import java.net.URI;
+import java.net.URISyntaxException;
 
 @ClientEndpoint
 public class WebsocketClientEndpoint {
@@ -69,4 +70,5 @@ public class WebsocketClientEndpoint {
 
         public void handleMessage(String message);
     }
+
 }

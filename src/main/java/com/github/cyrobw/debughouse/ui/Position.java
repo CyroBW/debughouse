@@ -1,6 +1,6 @@
-package com.cyrobw.client.ui;
+package com.github.cyrobw.debughouse.ui;
 
-import com.cyrobw.client.BughouseBoard;
+import com.github.cyrobw.debughouse.BughouseBoard;
 import com.github.bhlangonijr.chesslib.Piece;
 import com.github.bhlangonijr.chesslib.PieceType;
 import com.github.bhlangonijr.chesslib.Side;
@@ -25,7 +25,6 @@ public class Position extends GridPane {
 
     /**
      * Attempt to trigger a premove and redisplay all the premoves on board.
-     *
      */
     public void executePremoves() {
         assert premoves.size() == predrops.size();
@@ -43,8 +42,7 @@ public class Position extends GridPane {
                         break;
                     }
                 }
-            }
-            else {
+            } else {
                 // Trigger first premove + all invalid premoves fall through
                 while (!premoves.isEmpty()) {
                     String premove = premoves.remove();
@@ -72,7 +70,6 @@ public class Position extends GridPane {
 
     /**
      * Cancels the current premoves.
-     *
      */
     public void cancelPremoves() {
         Client.sendToServer("cancel");
@@ -133,8 +130,7 @@ public class Position extends GridPane {
             } else {
                 // Client.sendToChat("premove " + board.gameState.getSan(move)); // Premove suggestion
             }
-        }
-        else if (board.gameState.isLegal(move)) {
+        } else if (board.gameState.isLegal(move)) {
             if (board.userBoard) {
                 Client.sendToServer("move " + move.toLowerCase());
                 board.unhighlightAll();
@@ -154,7 +150,6 @@ public class Position extends GridPane {
 
     /**
      * Populates the board with 64 fields for each square.
-     *
      */
     public void createFields() {
         for (int i = 0; i < 64; i++) {
@@ -173,7 +168,6 @@ public class Position extends GridPane {
 
     /**
      * Render current pieces on board.
-     *
      */
     public void render() {
         for (int i = 0; i < 64; i++) {

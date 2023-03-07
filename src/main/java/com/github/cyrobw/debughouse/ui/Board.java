@@ -1,6 +1,6 @@
-package com.cyrobw.client.ui;
+package com.github.cyrobw.debughouse.ui;
 
-import com.cyrobw.client.BughouseBoard;
+import com.github.cyrobw.debughouse.BughouseBoard;
 import com.github.bhlangonijr.chesslib.Piece;
 import com.github.bhlangonijr.chesslib.Side;
 import com.github.bhlangonijr.chesslib.Square;
@@ -59,13 +59,17 @@ public class Board extends Application {
     private int toX, toY;
     public String username1 = "username", username2 = "username";
     public String rating1 = "(1600)", rating2 = "(1600)";
+
     public int getDropPieceSelected() {
         return dropPieceSelected;
     }
+
     private int dropPieceSelected = 0;
+
     public Board(boolean userBoard) {
         this.userBoard = userBoard;
     }
+
     public void reset() {
         moveHistory.clear();
     }
@@ -87,7 +91,6 @@ public class Board extends Application {
 
     /**
      * Redraw both hands
-     *
      */
     public void renderHands() {
         bottomPocket.render();
@@ -98,14 +101,12 @@ public class Board extends Application {
 
     /**
      * Update which clocks are running
-     *
      */
     public void updateClockTurns() {
         if (gameState.sideToMove() != userSide) {
             bottomClock.stop();
             topClock.start();
-        }
-        else {
+        } else {
             topClock.stop();
             bottomClock.start();
         }
@@ -113,7 +114,6 @@ public class Board extends Application {
 
     /**
      * Stops all clocks on board
-     *
      */
     public void stopClocks() {
         bottomClock.stop();
@@ -189,11 +189,11 @@ public class Board extends Application {
 
         // Set margins
         BorderPane.setMargin(topControls, new Insets(squareSize * 7 / 30, 0, squareSize * 7 / 30, 20 * scale + squareSize * 4 / 5));
-        BorderPane.setMargin(bottomControls, new Insets(0, 0, squareSize * 5/8, 20 * scale + squareSize * 4 / 5));
+        BorderPane.setMargin(bottomControls, new Insets(0, 0, squareSize * 5 / 8, 20 * scale + squareSize * 4 / 5));
         BorderPane.setMargin(leftPockets, new Insets(0, 10 * scale, 0, 10 * scale));
         BorderPane.setMargin(rightPockets, new Insets(0, 10 * scale, 0, 10 * scale));
-        GridPane.setMargin(topPocket, new Insets(0, squareSize * 7/4, 0, 0));
-        GridPane.setMargin(bottomPocket,  new Insets(0, squareSize * 7/4, 0, 0));
+        GridPane.setMargin(topPocket, new Insets(0, squareSize * 7 / 4, 0, 0));
+        GridPane.setMargin(bottomPocket, new Insets(0, squareSize * 7 / 4, 0, 0));
         boardPane.setStyle("-fx-background-color: #232323;");
 
         cursorImage.setFitWidth(squareSize * 4 / 5);
@@ -213,8 +213,7 @@ public class Board extends Application {
                 if (userSide.equals(Side.BLACK)) {
                     toX = 7 - (int) Math.floor((e.getSceneX() - boundsInScene.getMinX()) / squareSize);
                     toY = (int) Math.floor((e.getSceneY() - boundsInScene.getMinY()) / squareSize);
-                }
-                else {
+                } else {
                     toX = (int) Math.floor((e.getSceneX() - boundsInScene.getMinX()) / squareSize);
                     toY = 7 - (int) Math.floor((e.getSceneY() - boundsInScene.getMinY()) / squareSize);
                 }
@@ -235,8 +234,7 @@ public class Board extends Application {
             if (userSide.equals(Side.BLACK)) {
                 toX = 7 - (int) Math.floor((e.getSceneX() - boundsInScene.getMinX()) / squareSize);
                 toY = (int) Math.floor((e.getSceneY() - boundsInScene.getMinY()) / squareSize);
-            }
-            else {
+            } else {
                 toX = (int) Math.floor((e.getSceneX() - boundsInScene.getMinX()) / squareSize);
                 toY = 7 - (int) Math.floor((e.getSceneY() - boundsInScene.getMinY()) / squareSize);
             }
@@ -403,7 +401,6 @@ public class Board extends Application {
 
     /**
      * Draw board coordinates
-     *
      */
     private void drawCoordinates(BorderPane pane) {
         Font font = Font.font("Sans-Serif", FontWeight.BOLD, 20 * scale);
@@ -446,6 +443,7 @@ public class Board extends Application {
     public void pushMove(String move) {
         moveHistory.add(move);
     }
+
     public String getLastMove() {
         if (moveHistory.isEmpty()) {
             return null;
@@ -456,20 +454,21 @@ public class Board extends Application {
         }
         return move;
     }
+
     public void setFen(String fen) {
         unhighlightAll();
         gameState.loadFromFen(fen);
         this.fen = fen;
         try {
             position.executePremoves();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             position.cancelPremoves();
         }
         if (playing) {
             updateClockTurns();
         }
     }
+
     public void setSelectedDrop(Piece piece) {
         Image image = BoardField.pieceToImage.get(piece);
         cursorImage.setImage(image);
@@ -486,9 +485,11 @@ public class Board extends Application {
             outlineSquares[Square.fromValue(Character.toString('A' + toX) + (1 + toY)).ordinal()].setVisible(false);
         }
     }
+
     public static double clamp(double value, double min, double max) {
         return Math.max(min, Math.min(max, value));
     }
+
     private void setSquareSize(double squareSize) {
         this.squareSize = clamp(squareSize, MIN_SQUARE_SIZE, MAX_SQUARE_SIZE);
         this.scale = this.squareSize / MAX_SQUARE_SIZE;
@@ -499,6 +500,7 @@ public class Board extends Application {
             prefs.putDouble("right_board_square_size", this.squareSize);
         }
     }
+
     private void resizeScene(Stage stage, double newWidth, double newHeight) {
         stage.setWidth(newWidth);
         stage.setHeight(newHeight);
@@ -537,6 +539,7 @@ public class Board extends Application {
             prefs.putInt("right_board_pocket_location", pocketLayoutSetting);
         }
     }
+
     @Override
     public void start(Stage stage) {
         stage.setTitle("Debughouse Client");
@@ -552,7 +555,7 @@ public class Board extends Application {
             pocketLayoutSetting = prefs.getInt("left_board_pocket_location", 0);
             squareSize = prefs.getDouble("left_board_square_size", MAX_SQUARE_SIZE);
         } else {
-            pocketLayoutSetting = prefs.getInt("right_board_pocket_location",0);
+            pocketLayoutSetting = prefs.getInt("right_board_pocket_location", 0);
             squareSize = prefs.getDouble("right_board_square_size", MAX_SQUARE_SIZE);
         }
 
@@ -579,12 +582,12 @@ public class Board extends Application {
                 }
             }
             if (key.getCode() == KeyCode.EQUALS) {
-                setSquareSize(squareSize+1);
+                setSquareSize(squareSize + 1);
                 createComponents();
                 resizeScene(stage, squareSize * 10, squareSize * 12);
             }
             if (key.getCode() == KeyCode.MINUS) {
-                setSquareSize(squareSize-1);
+                setSquareSize(squareSize - 1);
                 createComponents();
                 resizeScene(stage, squareSize * 10, squareSize * 12);
             }
@@ -740,7 +743,6 @@ public class Board extends Application {
 
     /**
      * Returns if there is a game in session.
-     *
      */
     public boolean isPlaying() {
         return this.playing;

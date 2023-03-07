@@ -1,13 +1,12 @@
-package com.cyrobw.client.ui;
+package com.github.cyrobw.debughouse.ui;
 
-import com.cyrobw.client.SoundPlayer;
-import com.cyrobw.client.WebsocketClientEndpoint;
+import com.github.cyrobw.debughouse.SoundPlayer;
+import com.github.cyrobw.debughouse.WebsocketClientEndpoint;
 import com.github.bhlangonijr.chesslib.Side;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.prefs.Preferences;
@@ -108,7 +107,7 @@ public class Client extends Application {
      * @throws URISyntaxException
      */
     private void connect(String ip, String host) throws URISyntaxException {
-        clientEndPoint = new WebsocketClientEndpoint(new URI("ws://" + ip + ":" + host + "/?username=" + username + "&password=" + password));
+        clientEndPoint = new WebsocketClientEndpoint(new URI("ws://" + ip + "/:" + host + "/?username=" + username + "&password=" + password));
         clientEndPoint.addMessageHandler(message -> {
             if (message.equals("connected")) {
                 Platform.runLater(() -> {
@@ -225,6 +224,7 @@ public class Client extends Application {
             }
         });
     }
+
     public static void main(String[] args) {
         launch(args);
     }

@@ -1,4 +1,4 @@
-package com.cyrobw.client.ui;
+package com.github.cyrobw.debughouse.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,15 +9,20 @@ import javafx.stage.Stage;
 import java.util.prefs.Preferences;
 
 public class LoginController {
-    @FXML private TextField usernameField;
-    @FXML private TextField passwordField;
-    @FXML private TextField hostnameField;
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private TextField passwordField;
+    @FXML
+    private TextField hostnameField;
+
     public void initialize() {
         Preferences prefs = Preferences.userRoot().node("preferences");
         usernameField.setText(prefs.get("username", ""));
         passwordField.setText(prefs.get("password", ""));
         hostnameField.setText(prefs.get("hostname", ""));
     }
+
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws Exception {
         Preferences prefs = Preferences.userRoot().node("preferences");
