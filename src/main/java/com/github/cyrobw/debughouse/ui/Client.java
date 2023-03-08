@@ -21,7 +21,7 @@ public class Client extends Application {
     public static String password;
     public static String ip;
     public static String host = "8080";
-    public Side userSide = Side.WHITE;
+
     @Override
     public void start(Stage stage) throws Exception {
         leftBoard = new Board(true);
@@ -74,8 +74,8 @@ public class Client extends Application {
         double stage2_x = prefs.getDouble("stage2_x", -1);
         double stage2_y = prefs.getDouble("stage2_y", -1);
         if (stage2_x != -1) {
-            stage1.setX(stage2_x);
-            stage1.setY(stage2_y);
+            stage2.setX(stage2_x);
+            stage2.setY(stage2_y);
         }
 
         double stage3_x = prefs.getDouble("stage3_x", -1);
@@ -134,6 +134,7 @@ public class Client extends Application {
                 case "started" -> Platform.runLater(() -> {
                     leftBoard.setPlaying(true);
                     rightBoard.setPlaying(true);
+                    SoundPlayer.playSound("Gamestart.wav");
                 });
                 case "finished" -> Platform.runLater(() -> {
                     leftBoard.setPlaying(false);
