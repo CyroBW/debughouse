@@ -224,6 +224,7 @@ public class Board extends Application {
                     outlineSquares[Square.fromValue(Character.toString('A' + toX) + (1 + toY)).ordinal()].setVisible(true);
                 }
             }
+            e.consume();
         });
 
         boardPane.setOnMouseDragged(e -> {
@@ -244,15 +245,17 @@ public class Board extends Application {
             if (!(toX < 0 || toX > 7 || toY < 0 || toY > 7)) {
                 outlineSquares[Square.fromValue(Character.toString('A' + toX) + (1 + toY)).ordinal()].setVisible(true);
             }
+            e.consume();
         });
 
-        boardPane.setOnMouseReleased((MouseEvent e) -> {
+        boardPane.setOnMouseReleased(e -> {
             if (!(toX < 0 || toX > 7 || toY < 0 || toY > 7)) {
                 outlineSquares[Square.fromValue(Character.toString('A' + toX) + (1 + toY)).ordinal()].setVisible(false);
             }
             int pieceIndex = dropPieceSelected - 1;
             setSelectedDrop(null);
             if (pieceIndex == -1) {
+                e.consume();
                 return;
             }
             String move;
@@ -266,11 +269,13 @@ public class Board extends Application {
                 toY = 7 - (int) Math.floor((e.getSceneY() - boundsInScene.getMinY()) / squareSize);
             }
             if (toX < 0 || toX > 7 || toY < 0 || toY > 7) {
+                e.consume();
                 return;
             }
             to = Character.toString('A' + toX) + (1 + toY);
             move = new char[]{'P', 'N', 'B', 'R', 'Q'}[pieceIndex] + "@" + to;
             position.doMove(move);
+            e.consume();
         });
 
         pocketLayoutSetting--;
@@ -552,6 +557,9 @@ public class Board extends Application {
                 underPromote = false;
             }
         });
+
+        stage.maxWidthProperty().bind(stage.widthProperty());
+        stage.minWidthProperty().bind(stage.widthProperty());
 
         Preferences prefs = Preferences.userRoot().node("preferences");
         if (userBoard) {

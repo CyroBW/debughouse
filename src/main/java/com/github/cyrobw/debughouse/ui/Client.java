@@ -21,7 +21,7 @@ public class Client extends Application {
     public static String password;
     public static String ip;
     public static String host = "8080";
-    public Side userSide = Side.WHITE;
+
     @Override
     public void start(Stage stage) throws Exception {
         leftBoard = new Board(true);
@@ -64,14 +64,26 @@ public class Client extends Application {
                     prefs.putDouble("stage3_y", stage3.getY());
                 });
 
-        stage1.setX(prefs.getDouble("stage1_x", 0));
-        stage1.setY(prefs.getDouble("stage1_y", 0));
+        double stage1_x = prefs.getDouble("stage1_x", -1);
+        double stage1_y = prefs.getDouble("stage1_y", -1);
+        if (stage1_x != -1) {
+            stage1.setX(stage1_x);
+            stage1.setY(stage1_y);
+        }
 
-        stage2.setX(prefs.getDouble("stage2_x", leftBoard.squareSize * 10));
-        stage2.setY(prefs.getDouble("stage2_y", 0));
+        double stage2_x = prefs.getDouble("stage2_x", -1);
+        double stage2_y = prefs.getDouble("stage2_y", -1);
+        if (stage2_x != -1) {
+            stage2.setX(stage2_x);
+            stage2.setY(stage2_y);
+        }
 
-        stage3.setX(prefs.getDouble("stage3_x", (leftBoard.squareSize * 10 + rightBoard.squareSize * 10 + Chat.WIDTH / 2)));
-        stage3.setY(prefs.getDouble("stage3_y", (leftBoard.squareSize * 10.42 - Chat.HEIGHT) / 2));
+        double stage3_x = prefs.getDouble("stage3_x", -1);
+        double stage3_y = prefs.getDouble("stage3_y", -1);
+        if (stage3_x != -1) {
+            stage3.setX(stage3_x);
+            stage3.setY(stage3_y);
+        }
 
         if (connect) {
             chat.receivedMessaged("Connecting to server...");
